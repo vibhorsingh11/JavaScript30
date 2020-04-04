@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mouse Shadow</title>
+  <link href="style.css" rel="stylesheet">
+</head>
+<body>
+
+  <div class="hero">
+    <h1 contenteditable>🔥WOAH!</h1>
+  </div>
+
+<script>
+  // Getting div and text for listening to events
+  const hero = document.querySelector('.hero');
+  const text = document.querySelector('h1');
+  // Setting the distance of shadow
+  const walk = 100;
+
+  // Apply shadow effect
+  function shadow(e) {
+    // Using destructuring to assign the value from hero div and current position of mouse
+    const { offsetWidth: width, offsetHeight: height } = hero;
+    let { offsetX: x, offsetY: y } = e;
+    // Checking the current position of mouse and setting it 
+    if (this !== e.target){
+      x = x + e.target.offsetLeft;
+      y = y + e.target.offsetTop;
+    }
+
+    // Calculating the distance from the main div 
+    const xWalk = Math.round((x / width * walk) - (walk / 2));
+    const yWalk = Math.round((y / height * walk) - (walk / 2));
+    // Assigning the style to text 
+    text.style.textShadow = `
+      ${xWalk}px ${yWalk}px 0 rgba(255,0,255,0.7),
+      ${xWalk * -1}px ${yWalk}px 0 rgba(0,255,255,0.7),
+      ${yWalk}px ${xWalk * -1}px 0 rgba(0,255,0,0.7),
+      ${yWalk * -1}px ${xWalk}px 0 rgba(0,0,255,0.7)
+    `;
+  }
+
+  // Listening to mouse event and firing shadow effect
+  hero.addEventListener('mousemove', shadow);
+</script>
+</body>
+</html>
